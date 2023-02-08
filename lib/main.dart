@@ -1,3 +1,4 @@
+import 'package:codingpapa/recipe_detail.dart';
 import 'package:flutter/material.dart';
 import 'recipe_model.dart';
 
@@ -39,8 +40,30 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView.builder(
           itemCount: Recipe.samples.length,
           itemBuilder: (BuildContext context, int index) {
-            return Text('text -$index');
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return RecipeDetail(recipe: Recipe.samples[index]);
+                }));
+              },
+              child: buildRecipeCard(Recipe.samples[index]),
+            );
           }),
+    );
+  }
+
+  Widget buildRecipeCard(Recipe recipe) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(children: [
+          Image.asset(recipe.imageUrl),
+          SizedBox(height: 16),
+          Text(recipe.label),
+        ]),
+      ),
     );
   }
 }
